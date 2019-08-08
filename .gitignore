@@ -1,5 +1,6 @@
 terraform-provision/google-account.json
 terraform-provision/.terraform
+terraform-provision/terraform.tfstate.d
 terraform-provision/terraform-account.json
 terraform-provision/terraform.tfvars
 terraform-provision/terraform.tfstate.backup
