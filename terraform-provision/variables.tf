@@ -10,7 +10,7 @@ variable "account_name" {
   description = "the account name"
 }
 variable "cluster_name" {
-  default = "nginx-demo-cluster"
+  default = "wordpress-demo-cluster"
   description = "Give a name for the cluster"
 
 }

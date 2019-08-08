@@ -9,7 +9,7 @@ From the google console (IAM & admin) the credentials created need to have a rol
   - `$ cd terraform-provision;`
 
 ##### 2. Make sure to have the credentials to create the resources in Google Cloud Platform, you need;
-  - to create file called *google-account.json* (this is downloaded from google IAM console).
+  - to create file called *google-account.json* (this is downloaded from google IAM console from 'create account' -> 'create access key') options.
   - change the *project_id* variable in the file *variables.tf* accordantly with the project.
 
 
@@ -28,31 +28,56 @@ From the google console (IAM & admin) the credentials created need to have a rol
   - `$ terraform apply;`
 
 
+===============================================================================================
+### Deploy an static website and web-application to the cluster
+
 ##### 4. To create a simple app with the nginx web-host-server.
-  - copy the 3 file to the instance to create the services 
+  - copy the 3 file to the instance to create the services/resources
   - `kubectl apply -f deployment.yaml service.yaml ingress.yaml`
-  - To check if the ingress is availabke worldwide run `kc get inggress`
+  - To check if the ingress is available worldwide run `kc get inggress`
 
 
+##### 5. To create a simple app with the nginx web-host-server.
 
-###### Usefull commnads ######
+To create the Wordpress-cluster connect to mysql run the following Instructions;
 
-alias kc='kubectl'
+In order to create resource 'storage' required for MySQL and Wordpress the first step is to create PersistentVolumeClaims
+ - `kubectl apply -f mysql-volumeclaim.yaml`
+ - `kubectl apply -f wordpress-volumeclaim.yaml`
 
-- `kc cluster-info`
+Create a resource 'secrete' for the mysql database
+- `kubectl create secret generic mysql --from-literal=password=YOUR_PASSWORD`
 
-- `kc api-resources --verbs=list`
+Create a 'deployment' resource for mysql
+- `kubectl create -f mysql.yaml`
 
-- `kc get pod --all-namespaces -o wide`
-- `kc describe pod`
-- `kc get all -o wide`
-- `kc get svc -o wide` # get the services
-- `kc get ing -o wide` # get the ingress
-- `kc get deply -o wide` # get the deployemnt
+Create a resource 'service' for mysql
+- `kubectl create -f mysql-service.yaml`
 
-- `kc get nodes --all-namespaces -o wide`
+Create a 'deployment' resources for wordpress
+- `kubectl create -f wordpress.yaml`
+
+Create a resource 'service' for wordpress
+ - `kubectl create -f wordpress-service.yaml`
+
+ ===============================================================================================
+
+ ###### Useful commands ######
+
+ alias kc='kubectl'
+
+ - `kc cluster-info`
+
+ - `kc api-resources --verbs=list` # show all `resources commands` to interact with the kubernetes
+
+ - `kc get pod --all-namespaces -o wide` # show all namespaces
+ - `kc describe pod`
+ - `kc get all -o wide`
+ - `kc get svc -o wide` # get the services
+ - `kc get ing -o wide` # get the ingress
+ - `kc get deploy -o wide` # get the deployment
+
+ - `kc get nodes --all-namespaces -o wide`
 
 
-If the resaource is not in default namespace use the -n flag to specify your namespace 
-
-
+ If the resource is not in default namespace use the -n flag to specify your namespace
