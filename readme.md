@@ -29,7 +29,7 @@ From the google console (IAM & admin) the credentials created need to have a rol
 
 
 ##### 4. To create a simple app with the nginx web-host-server.
-  - copy the 3 file to the instance to create the services 
+  - copy the 3 file to the instance to create the services/resources 
   - `kubectl apply -f deployment.yaml service.yaml ingress.yaml`
   - To check if the ingress is availabke worldwide run `kc get inggress`
 
